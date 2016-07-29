@@ -1,9 +1,8 @@
-// This is a new commit to Github
+// master_script.js
+// last updated 7/29/16 by HA
+// for HiFi Study
 
 
-// script_v2.js
-// updated script
-// last modified: 7/29/2016 by HA
 
 /*
 
