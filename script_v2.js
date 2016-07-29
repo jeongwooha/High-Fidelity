@@ -15,6 +15,8 @@ TODO However, need to check if it works in both computers.
 
 */
 
+// testing hello world
+// hello
 
 
 // make wall disappear when b is pressed
