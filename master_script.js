@@ -1,18 +1,9 @@
 // master_script.js
-// last updated 7/29/16 by HA
+// last updated 8/1/16 by HA
 // for HiFi Study
 
 
 
-/*
-
-- Restored stanford.highfidelity.io domain and changed all the walls and counters
-to the ones in that domain.
-
-- Controller setting has been added to this script to make it simpler.
-TODO However, need to check if it works in both computers.
-
-*/
 
 
 
