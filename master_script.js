@@ -3,7 +3,7 @@
 // for HiFi Study
 
 
-function fixIdlePosition() {
+function overrideAnims() {
     var excludedRoles = ["rightHandGraspOpen",
                          "rightHandGraspClosed",
                          "leftHandGraspOpen",
@@ -34,6 +34,8 @@ function update(dt) {
         t = 0;
     }
 }
+
+overrideAnims();
 
 Script.update.connect(update);
 Script.scriptEnding.connect(function () {
