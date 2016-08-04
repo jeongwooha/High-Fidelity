@@ -1,5 +1,5 @@
 // master_script.js
-// last updated 8/1/16 by HA
+// last updated 8/4/16 by HA
 // for HiFi Study
 
 
@@ -25,6 +25,7 @@ function fixIdlePosition() {
 }
 
 
+// update motion every second manually
 var t = 0;
 function update(dt) {
     t += dt;
