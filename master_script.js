@@ -3,6 +3,42 @@
 // for HiFi Study
 
 
+function fixIdlePosition() {
+    var excludedRoles = ["rightHandGraspOpen",
+                         "rightHandGraspClosed",
+                         "leftHandGraspOpen",
+                         "leftHandGraspClosed"];
+
+    var IDLE_URL = "http://hifi-content.s3.amazonaws.com/ozan/dev/anim/standard_anims_160127/idle.fbx";
+
+    var skeletonModelURL = MyAvatar.skeletonModelURL;
+    var jointCount = MyAvatar.jointNames.length;
+    var roles = MyAvatar.getAnimationRoles();
+    var length = roles.length;
+
+    for (var i = 0; i < length; i++) {
+        if (excludedRoles.indexOf(roles[i]) == -1) {
+            // override all the avatar motions into IDLE motion
+            MyAvatar.overrideRoleAnimation(roles[i], IDLE_URL, 30, false, 1, 1);
+        }
+    }
+}
+
+
+var t = 0;
+function update(dt) {
+    t += dt;
+    if (t > 1) {
+        overrideAnims();
+        t = 0;
+    }
+}
+
+Script.update.connect(update);
+Script.scriptEnding.connect(function () {
+    Script.update.disconnect(update);
+})
+
 
 
 
