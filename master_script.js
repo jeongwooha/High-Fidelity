@@ -12,6 +12,9 @@ r - rest the counter to 20
 v - start the 5 minute countdown and the wall shows up again
 f - fix the arm movement
 
+z - start sending data
+x - stop sending data
+
  */
 
 
@@ -103,6 +106,7 @@ Controller.keyPressEvent.connect(function(key) {
     if (key.text === 'r') {
         Entities.editEntity(numtext1, {text: 20});
         Entities.editEntity(numtext2, {text: 20});
+        print("counter reseted to 20");
     }
 });
 
