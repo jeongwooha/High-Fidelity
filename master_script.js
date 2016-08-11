@@ -71,11 +71,12 @@ Controller.keyPressEvent.connect(function(key) {
     if (key.text == 'b') {
         visible = !visible;
         Entities.editEntity(wall, {visible: visible});
+        print("wall visibility");
     }
 });
 
 
-// Countdown the counte by 1
+// Countdown the count by 1
 // 'c'
 var numtext1 = 'bd153e01-3247-433a-b06d-023f2c435851';
 var numtext2 = 'ca72b2d1-f0ce-47b8-9a49-1525bc076a55';
@@ -96,6 +97,7 @@ Controller.keyPressEvent.connect(function(key) {
 
         Entities.editEntity(numtext1, {text: num});
         Entities.editEntity(numtext2, {text: num});
+        print("countdown by 1");
     }
 });
 
@@ -121,6 +123,7 @@ Controller.keyPressEvent.connect(function(key) {
         visible_counter = !visible_counter;
         Entities.editEntity(numtext1, {visible: visible_counter});
         Entities.editEntity(numtext2, {visible: visible_counter});
+        print("counter visibility");
     }
 });
 
@@ -137,6 +140,7 @@ Controller.keyPressEvent.connect(function(key) {
                 Entities.editEntity(wall, {visible: visible});
             }, 300000);
         }
+        print("v timer starting...");
     }
 });
 
