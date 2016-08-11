@@ -91,10 +91,14 @@ Controller.keyPressEvent.connect(function(key) {
     if (key.text == 'c') {
         if (num > 0) {
             num--;
+        }
+/*
+        else if (num == 20) {
+
         } else {
             num = 20;
         }
-
+*/
         Entities.editEntity(numtext1, {text: num});
         Entities.editEntity(numtext2, {text: num});
         print("countdown by 1");
@@ -106,8 +110,9 @@ Controller.keyPressEvent.connect(function(key) {
 // 'r'
 Controller.keyPressEvent.connect(function(key) {
     if (key.text === 'r') {
-        Entities.editEntity(numtext1, {text: 20});
-        Entities.editEntity(numtext2, {text: 20});
+        num = 20;
+        Entities.editEntity(numtext1, {text: num});
+        Entities.editEntity(numtext2, {text: num});
         print("counter reseted to 20");
     }
 });
