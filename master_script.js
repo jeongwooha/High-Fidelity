@@ -92,13 +92,7 @@ Controller.keyPressEvent.connect(function(key) {
         if (num > 0) {
             num--;
         }
-/*
-        else if (num == 20) {
 
-        } else {
-            num = 20;
-        }
-*/
         Entities.editEntity(numtext1, {text: num});
         Entities.editEntity(numtext2, {text: num});
         print("countdown by 1");
