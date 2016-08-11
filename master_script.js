@@ -116,7 +116,7 @@ Controller.keyPressEvent.connect(function(key) {
 
 // Enable/disable visibility for numtext1 and numtext2
 // 'm'
-var visible_counter = Entities.getEntityProperties(original_numtext1, visible);
+var visible_counter = Entities.getEntityProperties(numtext1, visible);
 
 Controller.keyPressEvent.connect(function(key) {
     if (key.text == 'm') {
