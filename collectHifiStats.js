@@ -22,10 +22,12 @@ var disconnect = Audio.playSound(disconnectSound, { localOnly: true});
 
 Controller.keyPressEvent.connect(function(key) {
     if (key.text === 'z') {
+        print("start sending data...");
         run = true;
         var connect = Audio.playSound(connectSound, { localOnly: true});
     }
     if (key.text === 'x') {
+        print("stop sending data");
         run = false;
         var disconnect = Audio.playSound(disconnectSound, { localOnly: true});
     }
