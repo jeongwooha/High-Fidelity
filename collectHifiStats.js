@@ -30,6 +30,7 @@ Controller.keyPressEvent.connect(function(key) {
         print("start sending data...");
         run = true;
         //var connect = Audio.playSound(connectSound, { localOnly: true});
+        // injector
     }
     if (key.text === 'x') {
         print("stop sending data");
@@ -47,6 +48,7 @@ Script.setInterval(function() {
         req.open("POST", ENDPOINT_URL, false);
         req.send(JSON.stringify(batch));
         batch = [];
+        print("collecting data for each interval...");
       }
   }
 }, COLLECT_EVERY);
