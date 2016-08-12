@@ -1,21 +1,22 @@
 // master_script.js
-// last updated 8/11/16 by HA
+// last updated 8/12/16 by HA
 // for HiFi Study
 
-/*
 
-keypress:
-m - display counter
-b - display wall
-c - countdown the counter
-r - rest the counter to 20
-v - start the 5 minute countdown and the wall shows up again
-f - fix the arm movement
 
-z - start sending data
-x - stop sending data
-
- */
+/*-------------------------------------------------------------------------*/
+/*  Keypress:                                                              */
+/*  m - display counter                                                    */
+/*  b - display wall                                                       */
+/*  c - countdown the counter                                              */
+/*  r - rest the counter to 20                                             */
+/*  v - start the 5 minute countdown and the wall shows up again           */
+/*  f - fix the arm movement                                               */
+/*                                                                         */
+/*  z - start sending data                                                 */
+/*  x - stop sending data                                                  */
+/*                                                                         */
+/*-------------------------------------------------------------------------*/
 
 
 function overrideAnims() {
@@ -57,10 +58,6 @@ Script.scriptEnding.connect(function () {
 })
 
 
-
-
-
-
 // Enable/disable visibility of the wall
 // 'b'
 var wall = '5af10887-444c-4283-928d-059644ca36e8';
@@ -68,7 +65,7 @@ var visible = Entities.getEntityProperties(wall, visible);
 
 Controller.keyPressEvent.connect(function(key) {
     print("you pressed " + key.text);
-    if (key.text == 'b') {
+    if (key.text === 'b') {
         visible = !visible;
         Entities.editEntity(wall, {visible: visible});
         print("wall visibility");
@@ -88,7 +85,7 @@ Entities.editEntity(numtext2, {text: num});
 
 
 Controller.keyPressEvent.connect(function(key) {
-    if (key.text == 'c') {
+    if (key.text === 'c') {
         if (num > 0) {
             num--;
         }
@@ -112,13 +109,12 @@ Controller.keyPressEvent.connect(function(key) {
 });
 
 
-
 // Enable/disable visibility for numtext1 and numtext2
 // 'm'
 var visible_counter = Entities.getEntityProperties(numtext1, visible);
 
 Controller.keyPressEvent.connect(function(key) {
-    if (key.text == 'm') {
+    if (key.text === 'm') {
         visible_counter = !visible_counter;
         Entities.editEntity(numtext1, {visible: visible_counter});
         Entities.editEntity(numtext2, {visible: visible_counter});
@@ -130,7 +126,7 @@ Controller.keyPressEvent.connect(function(key) {
 // After 5 minutes, the wall will come back up
 // 'v'
 Controller.keyPressEvent.connect(function(key) {
-    if (key.text == 'v') {
+    if (key.text === 'v') {
         visible = !visible;
         if (!visible) {
             Entities.editEntity(wall, {visible: visible});
@@ -142,10 +138,6 @@ Controller.keyPressEvent.connect(function(key) {
         print("v timer starting...");
     }
 });
-
-
-
-
 
 
 // Create a new mapping object
@@ -167,7 +159,7 @@ mapping.from(Controller.Standard.RightHand).to(function (value) {
 // 'f'
 var controllerFixed = false;
 Controller.keyPressEvent.connect(function(key) {
-    if (key.text == 'f') {
+    if (key.text === 'f') {
         if (controllerFixed === false) {
             controllerFixed = true;
             print("controller fix enabled.");

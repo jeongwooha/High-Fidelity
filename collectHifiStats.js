@@ -11,10 +11,10 @@ var SEND_EVERY = 10; // 10 batches = 1 second
 
 /*---------------------------------*/
 var user_id = 12345; // SONA ID
-var condition = 1; // condition type
-    // 1 - whole body
-    // 2 - whole body with fixed arm
-    // 3 - just face and hands
+var condition = A; // condition type
+    // A - whole body with free arm
+    // B - whole body with fixed arm
+    // C - just face and hands
 /*---------------------------------*/
 
 var batch = [];
@@ -27,7 +27,7 @@ var connect = Audio.playSound(connectSound, {localOnly: true});
 var disconnect = Audio.playSound(disconnectSound, {localOnly: true});
 
 
-Controller.keyPressEvent.connect(function(key) {
+Controller.keyPressEvent.connect(function (key) {
     if (key.text === 'z') {
         print("start sending data...");
         run = true;
@@ -41,7 +41,7 @@ Controller.keyPressEvent.connect(function(key) {
     }
 });
 
-Script.setInterval(function() {
+Script.setInterval(function () {
   if(run) {
       Stats.forceUpdateStats();
       batch.push(getStats());
