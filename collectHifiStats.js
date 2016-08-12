@@ -47,8 +47,9 @@ Script.setInterval(function() {
         var req = new XMLHttpRequest();
         req.open("POST", ENDPOINT_URL, false);
         req.send(JSON.stringify(batch));
+        print(batch);
         batch = [];
-        print("collecting data for each interval...");
+        print("collecting data...");
       }
   }
 }, COLLECT_EVERY);
