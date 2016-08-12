@@ -11,7 +11,7 @@ var SEND_EVERY = 10; // 10 batches = 1 second
 
 /*---------------------------------*/
 var user_id = 12345; // SONA ID
-var condition = A; // condition type
+//var condition = A; // condition type
     // A - whole body with free arm
     // B - whole body with fixed arm
     // C - just face and hands
@@ -60,7 +60,7 @@ Script.setInterval(function () {
 function getStats() {
   return {
     user_id: user_id,
-    condition: condition,
+    //condition: condition,
 
     time: Date.now() / 1000.0,
     framerate: Stats.framerate,
