@@ -9,11 +9,13 @@ var SEND_EVERY = 10; // 10 batches = 1 second
 
 
 
-/*----------------------------*/
+/*---------------------------------*/
 var user_id = 12345; // SONA ID
-//var condition = 1; // condition type
-/*----------------------------*/
-// TODO add condition status - 3 of them
+var condition = 1; // condition type
+    // 1 - whole body
+    // 2 - whole body with fixed arm
+    // 3 - just face and hands
+/*---------------------------------*/
 
 var batch = [];
 var run = false;
@@ -58,7 +60,7 @@ Script.setInterval(function() {
 function getStats() {
   return {
     user_id: user_id,
-    //condition: condition,
+    condition: condition,
 
     time: Date.now() / 1000.0,
     framerate: Stats.framerate,
