@@ -1,3 +1,8 @@
+
+
+
+
+
 var ENDPOINT_URL = "https://fjlp8zq4c2.execute-api.us-west-2.amazonaws.com/prod"; // TODO need to change
 var COLLECT_EVERY = 100; // 100 milliseconds
 var SEND_EVERY = 10; // 10 batches = 1 second
@@ -6,7 +11,7 @@ var SEND_EVERY = 10; // 10 batches = 1 second
 
 /*----------------------------*/
 var user_id = 12345; // SONA ID
-var condition = 1; // condition type
+//var condition = 1; // condition type
 /*----------------------------*/
 // TODO add condition status - 3 of them
 
@@ -16,20 +21,20 @@ var run = false;
 
 var connectSound = SoundCache.getSound("file:///" + Paths.resources + "sounds/hello.wav");
 var disconnectSound = SoundCache.getSound("file:///" + Paths.resources + "sounds/goodbye.wav");
-var connect = Audio.playSound(connectSound, { localOnly: true});
-var disconnect = Audio.playSound(disconnectSound, { localOnly: true});
+var connect = Audio.playSound(connectSound, {localOnly: true});
+var disconnect = Audio.playSound(disconnectSound, {localOnly: true});
 
 
 Controller.keyPressEvent.connect(function(key) {
     if (key.text === 'z') {
         print("start sending data...");
         run = true;
-        var connect = Audio.playSound(connectSound, { localOnly: true});
+        //var connect = Audio.playSound(connectSound, { localOnly: true});
     }
     if (key.text === 'x') {
         print("stop sending data");
         run = false;
-        var disconnect = Audio.playSound(disconnectSound, { localOnly: true});
+        //var disconnect = Audio.playSound(disconnectSound, { localOnly: true});
     }
 });
 
@@ -49,7 +54,7 @@ Script.setInterval(function() {
 function getStats() {
   return {
     user_id: user_id,
-    condition: condition,
+    //condition: condition,
 
     time: Date.now() / 1000.0,
     framerate: Stats.framerate,
