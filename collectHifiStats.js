@@ -29,13 +29,13 @@ Controller.keyPressEvent.connect(function(key) {
     if (key.text === 'z') {
         print("start sending data...");
         run = true;
-        //var connect = Audio.playSound(connectSound, { localOnly: true});
+        //var connect = Audio.playSound(connectSound, {localOnly: true});
         // injector
     }
     if (key.text === 'x') {
         print("stop sending data");
         run = false;
-        //var disconnect = Audio.playSound(disconnectSound, { localOnly: true});
+        //var disconnect = Audio.playSound(disconnectSound, {localOnly: true});
     }
 });
 
@@ -43,6 +43,7 @@ Script.setInterval(function() {
   if(run) {
       Stats.forceUpdateStats();
       batch.push(getStats());
+      print("before: " + JSON.stringify(batch));
       if(batch.length >= SEND_EVERY) {
         var req = new XMLHttpRequest();
         req.open("POST", ENDPOINT_URL, false);
