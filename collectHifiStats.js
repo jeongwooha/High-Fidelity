@@ -5,12 +5,6 @@
 
 //var ENDPOINT_URL = "https://fjlp8zq4c2.execute-api.us-west-2.amazonaws.com/prod"; // TODO need to change
 var ENDPOINT_URL = "https://qcy5nql2a4.execute-api.us-west-2.amazonaws.com/prod"; // NEW URL!
-// DynamoDB -> Trigger -> API Gateway
-
-
-// Amazon API Gateway
-// DynamoDB
-
 
 
 /*---------------------------------*/
@@ -72,7 +66,7 @@ function getStats() {
     return {
         //user_id: user_id,
         //condition: condition,
-        time: Date.now() / 1000.0,
+        "time": Date.now() / 1000.0,
         framerate: Stats.framerate,
         avatar_ping: Stats.avatarPing,
         tracked_head_position_x: MyAvatar.getTrackedHeadPosition().x,
