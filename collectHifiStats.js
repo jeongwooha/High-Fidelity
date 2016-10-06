@@ -24,7 +24,7 @@ var condition = "A"; // condition type
 
 
 
-//var COLLECT_EVERY = 100; // 100 milliseconds
+// var COLLECT_EVERY = 100; // 100 milliseconds
 var COLLECT_EVERY = 1000;
 var SEND_EVERY = 10; // 10 batches = 1 second
 
@@ -56,7 +56,7 @@ Script.setInterval(function () {
     if(run) {
         Stats.forceUpdateStats();
         batch.push(getStats());
-        print("before: " + JSON.stringify(batch));
+        //print("before: " + JSON.stringify(batch));
         if(batch.length >= SEND_EVERY) {
             var req = new XMLHttpRequest();
             req.open("POST", ENDPOINT_URL, false); // post to DynamoDB
