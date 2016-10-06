@@ -4,6 +4,12 @@
 
 
 var ENDPOINT_URL = "https://fjlp8zq4c2.execute-api.us-west-2.amazonaws.com/prod"; // TODO need to change
+//var ENDPOINT_URL = "https://qcy5nql2a4.execute-api.us-west-2.amazonaws.com/prod"; // NEW URL!
+// DynamoDB -> Trigger -> API Gateway
+
+
+// Amazon API Gateway
+// DynamoDB
 
 
 
@@ -52,10 +58,10 @@ Script.setInterval(function () {
         print("before: " + JSON.stringify(batch));
         if(batch.length >= SEND_EVERY) {
             var req = new XMLHttpRequest();
-            req.open("POST", ENDPOINT_URL, false);
+            req.open("POST", ENDPOINT_URL, false); // post to DynamoDB
             req.send(JSON.stringify(batch));
             print(JSON.stringify(batch));
-            batch = [];
+            batch = []; // refresh the batch
             print("collecting data...");
         }
     }
@@ -63,8 +69,8 @@ Script.setInterval(function () {
 
 function getStats() {
     return {
-        user_id: user_id,
-        condition: condition,
+        //user_id: user_id,
+        //condition: condition,
         time: Date.now() / 1000.0,
         framerate: Stats.framerate,
         avatar_ping: Stats.avatarPing,
