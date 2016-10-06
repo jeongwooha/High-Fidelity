@@ -15,7 +15,6 @@ var ENDPOINT_URL = "https://qcy5nql2a4.execute-api.us-west-2.amazonaws.com/prod"
 
 /*---------------------------------*/
 var user_id = 12345; // SONA ID
-// user_id var must matain its var name since it is directly linked to AWS dynamoDB
 var condition = "A"; // condition type
     // A - whole body with free arm
     // B - whole body with fixed arm
@@ -71,8 +70,8 @@ Script.setInterval(function () {
 
 function getStats() {
     return {
-        user_id: user_id,
-        condition: condition,
+        //user_id: user_id,
+        //condition: condition,
         time: Date.now() / 1000.0,
         framerate: Stats.framerate,
         avatar_ping: Stats.avatarPing,
