@@ -24,7 +24,8 @@ var condition = "A"; // condition type
 
 
 
-var COLLECT_EVERY = 100; // 100 milliseconds
+//var COLLECT_EVERY = 100; // 100 milliseconds
+var COLLECT_EVERY = 1000;
 var SEND_EVERY = 10; // 10 batches = 1 second
 
 var batch = [];
