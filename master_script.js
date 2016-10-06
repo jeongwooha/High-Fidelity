@@ -1,6 +1,24 @@
 // master_script.js
-// last updated 8/12/16 by HA
+// last updated 10/6/16 by HA
 // for HiFi Study
+
+
+/*
+
+    HiFi study domain | stanford.highfidelity.io
+
+    Avatar Links |
+
+    Male Bodied: https://s3-us-west-1.amazonaws.com/vhilstanford/male_body.fst
+    Male Disembodied: https://s3-us-west-1.amazonaws.com/vhilstanford/male_hands.fst
+    Female Bodied: https://s3-us-west-1.amazonaws.com/vhilstanford/female_body.fst
+    Female Disembodied: https://s3-us-west-1.amazonaws.com/vhilstanford/female_hands.fst
+
+    Avatar Positional Data |
+
+    PPT1: 6, 31, 0
+    PPT2: 5, 31, 0
+*/
 
 
 
