@@ -47,11 +47,11 @@ Controller.keyPressEvent.connect(function(key) {
 });
 
 Script.setInterval(function () {
-    if(run) {
+    if (run) {
         Stats.forceUpdateStats();
         batch.push(getStats());
         //print("before: " + JSON.stringify(batch));
-        if(batch.length >= SEND_EVERY) {
+        if (batch.length >= SEND_EVERY) {
             var req = new XMLHttpRequest();
             req.open("POST", ENDPOINT_URL, false); // post to DynamoDB
             req.send(JSON.stringify(batch));
@@ -64,9 +64,9 @@ Script.setInterval(function () {
 
 function getStats() {
     return {
-        //user_id: user_id,
-        //condition: condition,
         "time": Date.now() / 1000.0,
+        user_id: user_id,
+        condition: condition,
         framerate: Stats.framerate,
         avatar_ping: Stats.avatarPing,
         tracked_head_position_x: MyAvatar.getTrackedHeadPosition().x,
