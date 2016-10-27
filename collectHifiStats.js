@@ -1,9 +1,8 @@
+// Last updated 10/27/16 by Ha
 
 
 
 
-
-//var ENDPOINT_URL = "https://fjlp8zq4c2.execute-api.us-west-2.amazonaws.com/prod"; // TODO need to change
 var ENDPOINT_URL = "https://qcy5nql2a4.execute-api.us-west-2.amazonaws.com/prod"; // NEW URL!
 
 
