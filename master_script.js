@@ -1,5 +1,5 @@
 // master_script.js
-// last updated 10/6/16 by HA
+// last updated 10/31/16 by HA
 // for HiFi Study
 
 
@@ -18,6 +18,10 @@
 
     PPT1: 6, 31, 0
     PPT2: 5, 31, 0
+
+
+    Make sure to edit the user_id on the collectHifiStats.js before sending data
+    to Amazon AWS.
 */
 
 

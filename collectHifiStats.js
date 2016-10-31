@@ -1,4 +1,4 @@
-// Last updated 10/27/16 by Ha
+// Last updated 10/31/16 by Ha
 
 
 
@@ -7,7 +7,7 @@ var ENDPOINT_URL = "https://qcy5nql2a4.execute-api.us-west-2.amazonaws.com/prod"
 
 
 /*---------------------------------*/
-var user_id = 12345; // SONA ID
+var user_id = 920610; // SONA ID
 var condition = "A"; // condition type
     // A - whole body with free arm
     // B - whole body with fixed arm
