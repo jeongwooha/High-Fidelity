@@ -1,4 +1,4 @@
-// Last updated 10/27/16 by Ha
+// Last updated 11/17/16 by Ha
 
 
 
@@ -7,7 +7,7 @@ var ENDPOINT_URL = "https://qcy5nql2a4.execute-api.us-west-2.amazonaws.com/prod"
 
 
 /*---------------------------------*/
-var user_id = 12345; // SONA ID
+var user_id = "8780"; // SONA ID
 var condition = "A"; // condition type
     // A - whole body with free arm
     // B - whole body with fixed arm
@@ -42,6 +42,10 @@ Controller.keyPressEvent.connect(function(key) {
         print("stop sending data");
         run = false;
         //var disconnect = Audio.playSound(disconnectSound, {localOnly: true});
+    }
+    if (key.text === 'q') {
+        print("participants moving... modifying the user_id")
+        user_id += "F";
     }
 });
 

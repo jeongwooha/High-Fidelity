@@ -1,5 +1,5 @@
 // master_script.js
-// last updated 10/6/16 by HA
+// last updated 11/17/16 by HA
 // for HiFi Study
 
 
@@ -154,6 +154,21 @@ Controller.keyPressEvent.connect(function(key) {
             }, 300000);
         }
         print("v timer starting...");
+    }
+});
+
+
+// 'connected' text to show the data is being sent to DyanmoDB
+var connected = 'd2fa1432-b361-48e0-a801-2cb60586be31';
+var connectedVisible = Entities.getEntityProperties(connected, visible);
+
+// When pressed 'z', start sending data and pop up the 'connected' sign in the room
+Controller.keyPressEvent.connect(function(key) {
+    print("you pressed " + key.text);
+    if (key.text === 'z') {
+        connectedVisible = !visible;
+        Entities.editEntity(connected, {visible: visible});
+        print("connected visibility");
     }
 });
 
