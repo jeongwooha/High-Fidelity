@@ -166,7 +166,16 @@ var connectedVisible = Entities.getEntityProperties(connected, visible);
 Controller.keyPressEvent.connect(function(key) {
     print("you pressed " + key.text);
     if (key.text === 'z') {
-        connectedVisible = !connectedVisible;
+        connectedVisible = true;
+        Entities.editEntity(connected, {visible: connectedVisible});
+        print("connected visibility");
+    }
+});
+
+Controller.keyPressEvent.connect(function(key) {
+    print("you pressed " + key.text);
+    if (key.text === 'x') {
+        connectedVisible = false;
         Entities.editEntity(connected, {visible: connectedVisible});
         print("connected visibility");
     }
