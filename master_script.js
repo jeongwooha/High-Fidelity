@@ -1,5 +1,5 @@
 // master_script.js
-// last updated 10/31/16 by HA
+// last updated 11/17/16 by HA
 // for HiFi Study
 
 
@@ -18,10 +18,6 @@
 
     PPT1: 6, 31, 0
     PPT2: 5, 31, 0
-
-
-    Make sure to edit the user_id on the collectHifiStats.js before sending data
-    to Amazon AWS.
 */
 
 
@@ -158,6 +154,21 @@ Controller.keyPressEvent.connect(function(key) {
             }, 300000);
         }
         print("v timer starting...");
+    }
+});
+
+
+// 'connected' text to show the data is being sent to DyanmoDB
+var connected = 'd2fa1432-b361-48e0-a801-2cb60586be31';
+var connectedVisible = Entities.getEntityProperties(connected, visible);
+
+// When pressed 'z', start sending data and pop up the 'connected' sign in the room
+Controller.keyPressEvent.connect(function(key) {
+    print("you pressed " + key.text);
+    if (key.text === 'z') {
+        connectedVisible = !connectedVisible;
+        Entities.editEntity(connected, {visible: connectedVisible});
+        print("connected visibility");
     }
 });
 
