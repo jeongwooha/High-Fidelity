@@ -162,23 +162,34 @@ Controller.keyPressEvent.connect(function(key) {
 var connected = 'd2fa1432-b361-48e0-a801-2cb60586be31';
 var connectedVisible = Entities.getEntityProperties(connected, visible);
 
+var numtext1Color = Entities.getEntityProperties(numtext1, textColor);
+var numtext2Color = Entities.getEntityProperties(numtext2, textColor);
+
 // When pressed 'z', start sending data and pop up the 'connected' sign in the room
 Controller.keyPressEvent.connect(function(key) {
     print("you pressed " + key.text);
     if (key.text === 'z') {
-        connectedVisible = true;
-        Entities.editEntity(connected, {visible: connectedVisible});
-        print("connected visibility");
+        Entities.editEntity(numtext1, {textColor: 0, 255, 0});
+        Entities.editEntity(numtext2, {textColor: 0, 255, 0});
     }
+    // if (key.text === 'z') {
+    //     connectedVisible = true;
+    //     Entities.editEntity(connected, {visible: connectedVisible});
+    //     print("connected visibility");
+    // }
 });
 
 Controller.keyPressEvent.connect(function(key) {
     print("you pressed " + key.text);
     if (key.text === 'x') {
-        connectedVisible = false;
-        Entities.editEntity(connected, {visible: connectedVisible});
-        print("connected visibility");
+        Entities.editEntity(numtext1, {textColor: 255, 255, 255});
+        Entities.editEntity(numtext2, {textColor: 255, 255, 255});
     }
+    // if (key.text === 'x') {
+    //     connectedVisible = false;
+    //     Entities.editEntity(connected, {visible: connectedVisible});
+    //     print("connected visibility");
+    // }
 });
 
 
