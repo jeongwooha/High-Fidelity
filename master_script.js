@@ -162,15 +162,15 @@ Controller.keyPressEvent.connect(function(key) {
 var connected = 'd2fa1432-b361-48e0-a801-2cb60586be31';
 var connectedVisible = Entities.getEntityProperties(connected, visible);
 
-var numtext1Color = Entities.getEntityProperties(numtext1, textColor);
-var numtext2Color = Entities.getEntityProperties(numtext2, textColor);
+//var numtext1Color = Entities.getEntityProperties(numtext1, textColor);
+//var numtext2Color = Entities.getEntityProperties(numtext2, textColor);
 
 // When pressed 'z', start sending data and pop up the 'connected' sign in the room
 Controller.keyPressEvent.connect(function(key) {
     print("you pressed " + key.text);
     if (key.text === 'z') {
-        Entities.editEntity(numtext1, textColor: {red:0, green:255, blue:0});
-        Entities.editEntity(numtext2, textColor: {red:0, green:255, blue:0});
+        Entities.editEntity(numtext1, {textColor: {red:0, green:255, blue:0}});
+        Entities.editEntity(numtext2, {textColor: {red:0, green:255, blue:0}});
     }
     // if (key.text === 'z') {
     //     connectedVisible = true;
