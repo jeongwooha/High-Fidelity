@@ -1,5 +1,5 @@
 // master_script.js
-// last updated 11/17/16 by HA
+// last updated 12/1/16 by HA
 // for HiFi Study
 
 
@@ -168,6 +168,8 @@ var connectedVisible = Entities.getEntityProperties(connected, visible);
 // When pressed 'z', start sending data and pop up the 'connected' sign in the room
 Controller.keyPressEvent.connect(function(key) {
     print("you pressed " + key.text);
+
+    // make the countdown numbers into green when connected to the server
     if (key.text === 'z') {
         Entities.editEntity(numtext1, {textColor: {red:0, green:255, blue:0}});
         Entities.editEntity(numtext2, {textColor: {red:0, green:255, blue:0}});
@@ -181,6 +183,8 @@ Controller.keyPressEvent.connect(function(key) {
 
 Controller.keyPressEvent.connect(function(key) {
     print("you pressed " + key.text);
+
+    // make the countdown cnumbers into black again when disconnected to the server
     if (key.text === 'x') {
         Entities.editEntity(numtext1, {textColor: {red:255, green:255, blue:255}});
         Entities.editEntity(numtext2, {textColor: {red:255, green:255, blue:255}});
