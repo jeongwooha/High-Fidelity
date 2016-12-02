@@ -169,8 +169,8 @@ var numtext2Color = Entities.getEntityProperties(numtext2, textColor);
 Controller.keyPressEvent.connect(function(key) {
     print("you pressed " + key.text);
     if (key.text === 'z') {
-        Entities.editEntity(numtext1, {textColor: {red:0, green:255, blue:0}});
-        Entities.editEntity(numtext2, {textColor: {red:0, green:255, blue:0}});
+        Entities.editEntity(numtext1, textColor: {red:0, green:255, blue:0});
+        Entities.editEntity(numtext2, textColor: {red:0, green:255, blue:0});
     }
     // if (key.text === 'z') {
     //     connectedVisible = true;
@@ -182,8 +182,8 @@ Controller.keyPressEvent.connect(function(key) {
 Controller.keyPressEvent.connect(function(key) {
     print("you pressed " + key.text);
     if (key.text === 'x') {
-        Entities.editEntity(numtext1, {textColor: {red:255, green:255, blue:255}});
-        Entities.editEntity(numtext2, {textColor: {red:255, green:255, blue:255}});
+        Entities.editEntity(numtext1, textColor: {red:255, green:255, blue:255});
+        Entities.editEntity(numtext2, textColor: {red:255, green:255, blue:255});
     }
     // if (key.text === 'x') {
     //     connectedVisible = false;
