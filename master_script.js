@@ -151,7 +151,7 @@ Controller.keyPressEvent.connect(function(key) {
         } else {
             Script.setTimeout(function () {
                 Entities.editEntity(wall, {visible: visible});
-            }, 300000);
+            }, 500000);
         }
         print("v timer starting...");
     }
