@@ -1,5 +1,5 @@
 // master_script.js
-// last updated 1/11/17 by HA
+// last updated 1/24/17 by JeongWoo Ha
 // for HiFi Study
 
 
@@ -7,14 +7,17 @@
 
     HiFi study domain | stanford.highfidelity.io
 
-    Avatar Links |
 
-    Male Bodied: https://s3-us-west-1.amazonaws.com/vhilstanford/male_body.fst
-    Male Disembodied: https://s3-us-west-1.amazonaws.com/vhilstanford/male_hands.fst
-    Female Bodied: https://s3-us-west-1.amazonaws.com/vhilstanford/female_body.fst
-    Female Disembodied: https://s3-us-west-1.amazonaws.com/vhilstanford/female_hands.fst
 
-    Avatar Positional Data |
+    Avatar Links updated as in 1/24/17 |
+
+    Male Bodied: https://s3-us-west-2.amazonaws.com/vhilhifi/male_body.fst
+    Male Disembodied: https://s3-us-west-2.amazonaws.com/vhilhifi/male_hands.fst
+    Female Bodied: https://s3-us-west-2.amazonaws.com/vhilhifi/female_body.fst
+    Female Disembodied: https://s3-us-west-2.amazonaws.com/vhilhifi/female_hands.fst
+
+
+    Avatar Positions as in 1/24/17 |
 
     PPT1: 6, 31, 0
     PPT2: 5, 31, 0
@@ -151,7 +154,7 @@ Controller.keyPressEvent.connect(function(key) {
         } else {
             Script.setTimeout(function () {
                 Entities.editEntity(wall, {visible: visible});
-            }, 500000);
+            }, 300000); // 300000 milliseconds = 5 minutes
         }
         print("v timer starting...");
     }
