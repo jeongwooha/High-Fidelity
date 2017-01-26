@@ -156,8 +156,8 @@ Controller.keyPressEvent.connect(function(key) {
             Script.setTimeout(function () {
                 Entities.editEntity(wall, {visible: visible});
             }, 300000); // 300000 milliseconds = 5 minutes
+            print("v timer starting...");
         }
-        print("v timer starting...");
     }
 });
 
