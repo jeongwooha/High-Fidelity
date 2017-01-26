@@ -150,14 +150,20 @@ Controller.keyPressEvent.connect(function(key) {
 Controller.keyPressEvent.connect(function(key) {
     if (key.text === 'v') {
         visible = !visible;
-        if (!visible) {
-            Entities.editEntity(wall, {visible: visible});
-        } else {
-            Script.setTimeout(function () {
-                Entities.editEntity(wall, {visible: visible});
-            }, 300000); // 300000 milliseconds = 5 minutes
-            print("v timer starting...");
-        }
+        Entities.editEntity(wall, {visible: visible}); // make the wall dissapear
+        Script.setTimeout(function () {
+            Entities.editEntity(wall, {visible: !visible});
+        }, 300000);
+        print("5 minute timer starting now...")
+
+        // if (!visible) {
+        //     Entities.editEntity(wall, {visible: visible});
+        // } else {
+        //     Script.setTimeout(function () {
+        //         Entities.editEntity(wall, {visible: visible});
+        //     }, 300000); // 300000 milliseconds = 5 minutes
+        //     print("v timer starting...");
+        // }
     }
 });
 
