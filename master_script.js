@@ -7,8 +7,6 @@
 
     HiFi study domain | stanford.highfidelity.io
 
-
-
     Avatar Links updated as in 1/24/17 |
 
     Male Bodied: https://s3-us-west-2.amazonaws.com/vhilhifi/male_body.fst
@@ -19,8 +17,8 @@
 
     Avatar Positions as in 1/24/17 |
 
-    PPT1: 6, 31, 0
-    PPT2: 5, 31, 0
+    PPT1: 7.5, 31, 0
+    PPT2: 3.7, 31, 0
 */
 
 
@@ -96,8 +94,8 @@ Controller.keyPressEvent.connect(function(key) {
 
 // Countdown the count by 1
 // 'c'
-var numtext1 = 'bd153e01-3247-433a-b06d-023f2c435851';
-var numtext2 = 'ca72b2d1-f0ce-47b8-9a49-1525bc076a55';
+var numtext1 = 'bd153e01-3247-433a-b06d-023f2c435851'; // for PPT2 avatar
+var numtext2 = 'ca72b2d1-f0ce-47b8-9a49-1525bc076a55'; // for PPT1 avatar
 
 var num = 20;
 
