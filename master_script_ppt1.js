@@ -1,6 +1,9 @@
-// master_script.js
+// master_script_ppt1.js
 // last updated 1/26/17 by JeongWoo Ha
 // for HiFi Study
+
+
+// THIS IS THE SCRIPT FOR PPT1 ONLY
 
 
 /*
@@ -187,7 +190,7 @@ Controller.keyPressEvent.connect(function(key) {
 
     // make the countdown cnumbers into black again when disconnected to the server
     if (key.text === 'x') {
-        Entities.editEntity(numtext1, {textColor: {red:255, green:255, blue:255}});
+        //Entities.editEntity(numtext1, {textColor: {red:255, green:255, blue:255}});
         Entities.editEntity(numtext2, {textColor: {red:255, green:255, blue:255}});
     }
     // if (key.text === 'x') {
