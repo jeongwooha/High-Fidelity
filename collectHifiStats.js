@@ -1,6 +1,6 @@
 
 
-// Last updated 1/24/17 by JeongWoo Ha
+// Last updated 1/26/17 by JeongWoo Ha
 
 
 var ENDPOINT_URL = "https://qcy5nql2a4.execute-api.us-west-2.amazonaws.com/prod"; // NEW URL!
