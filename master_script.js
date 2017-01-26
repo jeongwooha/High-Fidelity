@@ -7,7 +7,7 @@
 
     HiFi study domain | stanford.highfidelity.io
 
-    Avatar Links updated as in 1/24/17 |
+    Avatar Links updated |
 
     Male Bodied: https://s3-us-west-2.amazonaws.com/vhilhifi/male_body.fst
     Male Disembodied: https://s3-us-west-2.amazonaws.com/vhilhifi/male_hands.fst
@@ -15,7 +15,7 @@
     Female Disembodied: https://s3-us-west-2.amazonaws.com/vhilhifi/female_hands.fst
 
 
-    Avatar Positions as in 1/24/17 |
+    Avatar Positions |
 
     PPT1: 7.5, 31, 0
     PPT2: 3.7, 31, 0
