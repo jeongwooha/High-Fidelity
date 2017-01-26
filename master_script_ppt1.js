@@ -175,7 +175,7 @@ Controller.keyPressEvent.connect(function(key) {
 
     // make the countdown numbers into green when connected to the server
     if (key.text === 'z') {
-        Entities.editEntity(numtext1, {textColor: {red:0, green:255, blue:0}});
+        //Entities.editEntity(numtext1, {textColor: {red:0, green:255, blue:0}});
         Entities.editEntity(numtext2, {textColor: {red:0, green:255, blue:0}});
     }
     // if (key.text === 'z') {
