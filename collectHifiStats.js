@@ -1,5 +1,5 @@
 // collectHifiStats.js
-// Last updated 1/26/17 by JeongWoo Ha
+// Last updated 2/7/17 by JeongWoo Ha
 // for HiFi Study
 
 var ENDPOINT_URL = "https://qcy5nql2a4.execute-api.us-west-2.amazonaws.com/prod"; // NEW URL!
@@ -12,9 +12,9 @@ var condition = "A"; // condition type
     // B - whole body with fixed arm
     // C - just face and hands
 /*---------------------------------*/
-
-
 var filepath = "D:/hifiTimeStats.txt"
+
+
 
 var COLLECT_EVERY = 100; // 100 milliseconds = 0.1 seconds
 //var COLLECT_EVERY = 1000;
@@ -50,12 +50,14 @@ Controller.keyPressEvent.connect(function(key) {
     //     user_id += "F";
     // }
 
-
+    // output the current time when the interaction starts and end to the local text file
+    // filepath to the text file located at the very top of this script
     if (key.text === 'q') {
         var currentTime = Date.now() / 1000.0;
         print("starting time for the interaction");
         var textFile = new File(filepath);
         textFile.open("w");
+        textFile.writeln(user_id);
         textFile.writeln(currentTime);
         textFile.close();
     }
