@@ -14,9 +14,9 @@ var condition = "A"; // condition type
 /*---------------------------------*/
 
 
+var filepath = "D:/hifiTimeStats.txt"
 
-
-var COLLECT_EVERY = 100; // 100 milliseconds
+var COLLECT_EVERY = 100; // 100 milliseconds = 0.1 seconds
 //var COLLECT_EVERY = 1000;
 var SEND_EVERY = 10; // 10 batches = 1 second
 
@@ -28,6 +28,9 @@ var connectSound = SoundCache.getSound("file:///" + Paths.resources + "sounds/he
 var disconnectSound = SoundCache.getSound("file:///" + Paths.resources + "sounds/goodbye.wav");
 var connect = Audio.playSound(connectSound, {localOnly: true});
 var disconnect = Audio.playSound(disconnectSound, {localOnly: true});
+
+
+
 
 
 Controller.keyPressEvent.connect(function(key) {
@@ -42,10 +45,22 @@ Controller.keyPressEvent.connect(function(key) {
         run = false;
         //var disconnect = Audio.playSound(disconnectSound, {localOnly: true});
     }
+    // if (key.text === 'q') {
+    //     print("participants moving... modifying the user_id")
+    //     user_id += "F";
+    // }
+
+
     if (key.text === 'q') {
-        print("participants moving... modifying the user_id")
-        user_id += "F";
+        var currentTime = Date.now() / 1000.0;
+        print("starting time for the interaction");
+        var textFile = new File(filepath);
+        textFile.open("w");
+        textFile.writeln(currentTime);
+        textFile.close();
     }
+
+
 });
 
 Script.setInterval(function () {
@@ -62,7 +77,7 @@ Script.setInterval(function () {
             print("collecting data...");
         }
     }
-}, COLLECT_EVERY);
+}, COLLECT_EVERY); // in milliseconds
 
 function getStats() {
     return {
