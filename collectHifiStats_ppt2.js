@@ -56,7 +56,8 @@ Controller.keyPressEvent.connect(function(key) {
     // filepath to the text file located at the very top of this script
     if (key.text === 'q') {
         var currentTime = Date.now() / 1000.0;
-        print("starting time for the interaction");
+        print("TIMESTAMP: starting time for the interaction");
+        print(currentTime);
         var textFile = new File(filepath);
         textFile.open("w");
         textFile.writeln(user_id);
