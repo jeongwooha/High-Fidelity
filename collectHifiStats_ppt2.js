@@ -14,7 +14,7 @@ var condition = "A"; // condition type
 /*---------------------------------*/
 
 // Filepath for PPT2
-var filepath = "D:/hifiTimeStats.txt"
+var filepath = "C:/Users/Jeremy Bailenson/hifiTimeStats.txt"
 
 
 
