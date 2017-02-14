@@ -58,7 +58,7 @@ Controller.keyPressEvent.connect(function(key) {
         var currentTime = Date.now() / 1000.0;
         print("TIMESTAMP: starting time for the interaction");
         print(currentTime);
-        priny("test")
+        
         //var textFile = new File(filepath);
         //textFile.open("w");
         //textFile.writeln(user_id);
