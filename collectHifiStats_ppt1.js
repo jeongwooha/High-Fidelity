@@ -8,9 +8,9 @@ var ENDPOINT_URL = "https://qcy5nql2a4.execute-api.us-west-2.amazonaws.com/prod"
 /*---------------------------------*/
 var user_id = "987987"; // SONA ID
 var condition = "A"; // condition type
-    // A - whole body with free arm
-    // B - whole body with fixed arm
-    // C - just face and hands
+// A - whole body with free arm
+// B - whole body with fixed arm
+// C - just face and hands
 /*---------------------------------*/
 
 // Filepath for PPT1
@@ -28,8 +28,12 @@ var run = false;
 
 var connectSound = SoundCache.getSound("file:///" + Paths.resources + "sounds/hello.wav");
 var disconnectSound = SoundCache.getSound("file:///" + Paths.resources + "sounds/goodbye.wav");
-var connect = Audio.playSound(connectSound, {localOnly: true});
-var disconnect = Audio.playSound(disconnectSound, {localOnly: true});
+var connect = Audio.playSound(connectSound, {
+    localOnly: true
+});
+var disconnect = Audio.playSound(disconnectSound, {
+    localOnly: true
+});
 
 
 
@@ -67,7 +71,7 @@ Controller.keyPressEvent.connect(function(key) {
 
 });
 
-Script.setInterval(function () {
+Script.setInterval(function() {
     if (run) {
         Stats.forceUpdateStats();
         batch.push(getStats());
