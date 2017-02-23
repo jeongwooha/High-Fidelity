@@ -82,7 +82,7 @@ Script.setInterval(function() {
             var req = new XMLHttpRequest();
             req.open("POST", ENDPOINT_URL, false); // post to DynamoDB
             req.send(JSON.stringify(batch));
-            print(JSON.stringify(batch));
+            //print(JSON.stringify(batch));
             batch = []; // refresh the batch
             print("collecting data...");
         }
