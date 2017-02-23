@@ -51,17 +51,21 @@ Controller.keyPressEvent.connect(function(key) {
         run = false;
         //var disconnect = Audio.playSound(disconnectSound, {localOnly: true});
     }
-    // if (key.text === 'q') {
-    //     print("participants moving... modifying the user_id")
-    //     user_id += "F";
-    // }
 
     // output the current time when the interaction starts and end to the local text file
     // filepath to the text file located at the very top of this script
     if (key.text === 'q') {
         var currentTime = Date.now() / 1000.0;
         print("TIMESTAMP: starting time for the interaction");
-        print(currentTime)
+        print(currentTime);
+
+        var timestamp = []
+        var userTimestamp = user_id.concat("timestamp")
+        timestamp.push({"time": currentTime, user_id: userTimestamp})
+
+        var req = new XMLHttpRequest();
+        req.open("POST", ENDPOINT_URL, false);
+        req.send(JSON.stringify(timestamp));
     }
 
 
