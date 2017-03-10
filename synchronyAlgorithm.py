@@ -2,13 +2,18 @@ import csv
 import math
 from collections import defaultdict
 import numpy as np
+from scipy.stats.stats import pearsonr
+
+###
+# To get the newest csv output,
+# node dynamoDBtoCSV.js -t study_stats > [today's date]output.csv
 
 
 ###
 # You must edit this part to get the correct data
-filename = '20170302output.csv'
-user_id_1 = '357a'
-user_id_2 = '357b'
+filename = '20170309output.csv'
+user_id_1 = '359a'
+user_id_2 = '359b'
 
 
 ### Constants
@@ -51,7 +56,8 @@ def getInteractionInterval():
             userid = row[USER_ID]
             if time == 'time': continue
 
-            # if userid has timestamp on it
+            # We are using userid1 because RA is pressing 'q' button in PPT1
+            # if userid1 has timestamp on it
             if userid == user_id_1 + 'timestamp':
                 print(userid)
                 interval.append(time)
@@ -62,6 +68,7 @@ def getInteractionInterval():
             print 'valid interval'
             print 'interval', interval[0], interval[1]
         else:
+            print len(interval)
             print 'invalid interval'
             return
 
@@ -71,6 +78,7 @@ def getInteractionInterval():
 def getDataWithinInterval():
     # get the interaction interval
     (start_interaction, end_interaction) = getInteractionInterval()
+    #(start_interaction, end_interaction) = (1487886092.1, 1487886904.2) for 354ab
 
     ppt1 = []
     ppt2 = []
@@ -133,33 +141,35 @@ def calculateMinDistance(ppt1, ppt2):
         ppt1_z = float(ppt1[i][AVATAR_POSITION_Z])
         ppt2_x = float(ppt2[i][AVATAR_POSITION_X])
         ppt2_z = float(ppt2[i][AVATAR_POSITION_Z])
-        distance = math.hypot(ppt2_x + ppt1_z, ppt2_z - ppt1_x)
+        # distance = math.hypot(ppt2_x + ppt1_z, ppt2_z - ppt1_x)
+
+        # avatar positions x,y,z are relative to the virtual environment,
+        # thus no need to adjust for the real coordinate
+        distance = math.hypot(ppt1_x - ppt2_x, ppt1_z - ppt2_z)
         if distance < minDistance:
             minDistance = distance
 
     return minDistance
 
-# calculates the standard deviation of the data points
-# right hand positions x,y,z
-# left hand positions x,y,z
-# right controller positions x,y,z
-# left controller positions x,y,z
-def calculateSD(data):
-    SDList = defaultdict(list)
+# creates a dictionary that contains all the data as value of data type key
+def createDataDict(data):
+
+    # dictionary where key is data type and value is the array of data
+    dataDict = defaultdict(list)
+
     right_hand_positions_x = []
     right_hand_positions_y = []
     right_hand_positions_z = []
     left_hand_positions_x = []
     left_hand_positions_y = []
     left_hand_positions_z = []
-    right_controller_positions_x = []
-    right_controller_positions_y = []
-    right_controller_positions_z = []
-    left_controller_positions_x = []
-    left_controller_positions_y = []
-    left_controller_positions_z = []
+    # right_controller_positions_x = []
+    # right_controller_positions_y = []
+    # right_controller_positions_z = []
+    # left_controller_positions_x = []
+    # left_controller_positions_y = []
+    # left_controller_positions_z = []
 
-    # add them to separate arrays
     for i in range(len(data)):
         right_hand_positions_x.append(float(data[i][RIGHT_HAND_POSITION_X]))
         right_hand_positions_y.append(float(data[i][RIGHT_HAND_POSITION_Y]))
@@ -167,27 +177,86 @@ def calculateSD(data):
         left_hand_positions_x.append(float(data[i][LEFT_HAND_POSITION_X]))
         left_hand_positions_y.append(float(data[i][LEFT_HAND_POSITION_Y]))
         left_hand_positions_z.append(float(data[i][LEFT_HAND_POSITION_Z]))
-        right_controller_positions_x.append(float(data[i][RIGHT_CONTROLLER_POSITION_X]))
-        right_controller_positions_y.append(float(data[i][RIGHT_CONTROLLER_POSITION_Y]))
-        right_controller_positions_z.append(float(data[i][RIGHT_CONTROLLER_POSITION_Z]))
-        left_controller_positions_x.append(float(data[i][LEFT_CONTROLLER_POSITION_X]))
-        left_controller_positions_y.append(float(data[i][LEFT_CONTROLLER_POSITION_Y]))
-        left_controller_positions_z.append(float(data[i][LEFT_CONTROLLER_POSITION_Z]))
+        # right_controller_positions_x.append(float(data[i][RIGHT_CONTROLLER_POSITION_X]))
+        # right_controller_positions_y.append(float(data[i][RIGHT_CONTROLLER_POSITION_Y]))
+        # right_controller_positions_z.append(float(data[i][RIGHT_CONTROLLER_POSITION_Z]))
+        # left_controller_positions_x.append(float(data[i][LEFT_CONTROLLER_POSITION_X]))
+        # left_controller_positions_y.append(float(data[i][LEFT_CONTROLLER_POSITION_Y]))
+        # left_controller_positions_z.append(float(data[i][LEFT_CONTROLLER_POSITION_Z]))
 
-    SDList['right_hand_position_x'] = np.std(right_hand_positions_x)
-    SDList['right_hand_position_y'] = np.std(right_hand_positions_y)
-    SDList['right_hand_position_z'] = np.std(right_hand_positions_z)
-    SDList['left_hand_position_x'] = np.std(left_hand_positions_x)
-    SDList['left_hand_position_y'] = np.std(left_hand_positions_y)
-    SDList['left_hand_position_z'] = np.std(left_hand_positions_z)
-    SDList['right_controller_position_x'] = np.std(right_controller_positions_x)
-    SDList['right_controller_position_y'] = np.std(right_controller_positions_y)
-    SDList['right_controller_position_z'] = np.std(right_controller_positions_z)
-    SDList['left_controller_position_x'] = np.std(left_controller_positions_x)
-    SDList['left_controller_position_y'] = np.std(left_controller_positions_y)
-    SDList['left_controller_position_z'] = np.std(left_controller_positions_z)
+    dataDict['right_hand_position_x'] = right_hand_positions_x
+    dataDict['right_hand_position_y'] = right_hand_positions_y
+    dataDict['right_hand_position_z'] = right_hand_positions_z
+    dataDict['left_hand_position_x'] = left_hand_positions_x
+    dataDict['left_hand_position_y'] = left_hand_positions_y
+    dataDict['left_hand_position_z'] = left_hand_positions_z
+    # dataDict['right_controller_position_x'] = right_controller_positions_x
+    # dataDict['right_controller_position_y'] = right_controller_positions_y
+    # dataDict['right_controller_position_z'] = right_controller_positions_z
+    # dataDict['left_controller_position_x'] = left_controller_positions_x
+    # dataDict['left_controller_position_y'] = left_controller_positions_y
+    # dataDict['left_controller_position_z'] = left_controller_positions_z
+
+    return dataDict
+
+# calculates the standard deviation of the data points
+# right hand positions x,y,z
+# left hand positions x,y,z
+# right controller positions x,y,z
+# left controller positions x,y,z
+def calculateSD(dataDict):
+    SDList = defaultdict(list)
+
+    for k,v in dataDict.iteritems():
+        SDList[k] = np.std(v)
 
     return SDList
+
+# calculates the rate of movement
+# since the absolute position of the two participants
+# are different, we must compare the change in position for each data
+# instead of the absolute positions.
+def calculateRate(dataDict):
+    rateDict = defaultdict(list)
+
+    for k,v in dataDict.iteritems():
+        rateList = []
+        for i in range(len(v)-1):
+            currVal = v[i]
+            nextVal = v[i+1]
+            rateList.append(nextVal - currVal) # calculate the rate
+        rateDict[k] = rateList
+
+    return rateDict
+
+# calculates the Pearson's correlation coefficient between data for the two participants
+# i.e., compare participant 1's right_hand_position_x and
+# participant 2's right_hand_position_x
+# Returns a dictionary with the calculated data
+def calculateCorrelations(ppt1, ppt2):
+    correlationList = defaultdict(list)
+
+    for k,_ in ppt1.iteritems():
+        # only interested in the Pearson's correlation coefficient,
+        # not the 2-tailed p-value, so return the first index
+        # correlationList[k] = pearsonr(ppt1[k], ppt2[k])[0]
+
+        # Becausae the participants are facing each other,
+        # we have a mirroring effect, so we switch hands when comparing
+        if k == 'right_hand_position_x':
+            correlationList[k] = pearsonr(ppt1[k], ppt2['left_hand_position_x'])[0]
+        if k == 'right_hand_position_y':
+            correlationList[k] = pearsonr(ppt1[k], ppt2['left_hand_position_y'])[0]
+        if k == 'right_hand_position_z':
+            correlationList[k] = pearsonr(ppt1[k], ppt2['left_hand_position_z'])[0]
+        if k == 'left_hand_position_x':
+            correlationList[k] = pearsonr(ppt1[k], ppt2['right_hand_position_x'])[0]
+        if k == 'left_hand_position_y':
+            correlationList[k] = pearsonr(ppt1[k], ppt2['right_hand_position_y'])[0]
+        if k == 'left_hand_position_z':
+            correlationList[k] = pearsonr(ppt1[k], ppt2['right_hand_position_z'])[0]
+
+    return correlationList
 
 # Main function to run synchrony algorithm
 def synchronyAlgorithm():
@@ -195,13 +264,44 @@ def synchronyAlgorithm():
     (ppt1, ppt2) = matchDataByTime()
     print(len(ppt1), len(ppt2))
 
+    # Minimum Distance
     minDistance = calculateMinDistance(ppt1, ppt2)
+    print '---------------------------'
+    print '---Minimum Distance'
     print('minDistance', minDistance)
+    print '---------------------------'
 
-    ppt1_SDList = calculateSD(ppt1)
-    ppt2_SDList = calculateSD(ppt2)
-    print ppt1_SDList
-    print ppt2_SDList
+    # Get data dictionary for each participant
+    ppt1DataDict = createDataDict(ppt1)
+    ppt2DataDict = createDataDict(ppt2)
+
+    # Standard Deviation
+    ppt1SDList = calculateSD(ppt1DataDict)
+    ppt2SDList = calculateSD(ppt2DataDict)
+    print '---------------------------'
+    print '---Standard Deviation'
+    print '---PPT1'
+    print ppt1SDList
+    print '---PPT2'
+    print ppt2SDList
+    print '---------------------------'
+
+    # Get rate data dictionary
+    ppt1RateDict = calculateRate(ppt1DataDict)
+    ppt2RateDict = calculateRate(ppt2DataDict)
+
+    # Correlations
+    # TODO
+    # do we put in the absolute position or rate of change of position?
+    correlationList = calculateCorrelations(ppt1RateDict, ppt2RateDict)
+    print '---------------------------'
+    print '---Pearson\'s correlation coefficients'
+    print '---In terms of PPT1: meaning PPT1\'s right hand <=> PPT2\'s left hand'
+    print correlationList
+    print '---------------------------'
+
+
+
 
 
 synchronyAlgorithm()
