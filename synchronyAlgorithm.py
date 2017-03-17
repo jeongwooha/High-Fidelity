@@ -11,7 +11,7 @@ from scipy.stats.stats import pearsonr
 
 ###
 # You must edit this part to get the correct data
-filename = '20170309output.csv'
+filename = '20170316output.csv'
 user_id_1 = '359a'
 user_id_2 = '359b'
 
@@ -24,6 +24,10 @@ USER_ID = 47 # column index for user_id in CSV
 
 AVATAR_POSITION_X = 11
 AVATAR_POSITION_Z = 10
+
+HEAD_POSITION_X = 4
+HEAD_POSITION_Y = 3
+HEAD_POSITION_Z = 1
 
 RIGHT_HAND_POSITION_X = 36
 RIGHT_HAND_POSITION_Y = 37
@@ -113,8 +117,8 @@ def matchDataByTime():
     count = 0
 
     for i in range(len(ppt1)):
+        time1 = ppt1[i][TIME][:UP_TO_FIRST_DECIMAL]
         for j in range(len(ppt2)):
-            time1 = ppt1[i][TIME][:UP_TO_FIRST_DECIMAL]
             time2 = ppt2[j][TIME][:UP_TO_FIRST_DECIMAL]
             # if time matches put the batch into a new array
             if time1 == time2:
@@ -123,6 +127,13 @@ def matchDataByTime():
                 ppt2_matched.append(ppt2[j])
 
     print 'number of data points with matching timestamp: ', count
+
+    # sort data by time
+    ppt1_matched = sorted(ppt1_matched, key=lambda data: data[TIME])
+    ppt2_matched = sorted(ppt2_matched, key=lambda data: data[TIME])
+    # for i in range(len(ppt1_matched)):
+        # print ppt1_matched[i][TIME], ppt2_matched[i][TIME]
+
     return (ppt1_matched, ppt2_matched)
 
 # calculates the minimum distance given two arrays of data points
@@ -157,9 +168,14 @@ def createDataDict(data):
     # dictionary where key is data type and value is the array of data
     dataDict = defaultdict(list)
 
+    head_positions_x = []
+    head_positions_y = []
+    head_positions_z = []
+
     right_hand_positions_x = []
     right_hand_positions_y = []
     right_hand_positions_z = []
+
     left_hand_positions_x = []
     left_hand_positions_y = []
     left_hand_positions_z = []
@@ -171,9 +187,17 @@ def createDataDict(data):
     # left_controller_positions_z = []
 
     for i in range(len(data)):
+        # head positions
+        head_positions_x.append(float(data[i][HEAD_POSITION_X]))
+        head_positions_y.append(float(data[i][HEAD_POSITION_Y]))
+        head_positions_z.append(float(data[i][HEAD_POSITION_Z]))
+
+        # right hand positions
         right_hand_positions_x.append(float(data[i][RIGHT_HAND_POSITION_X]))
         right_hand_positions_y.append(float(data[i][RIGHT_HAND_POSITION_Y]))
         right_hand_positions_z.append(float(data[i][RIGHT_HAND_POSITION_Z]))
+
+        # left hand positions
         left_hand_positions_x.append(float(data[i][LEFT_HAND_POSITION_X]))
         left_hand_positions_y.append(float(data[i][LEFT_HAND_POSITION_Y]))
         left_hand_positions_z.append(float(data[i][LEFT_HAND_POSITION_Z]))
@@ -184,6 +208,9 @@ def createDataDict(data):
         # left_controller_positions_y.append(float(data[i][LEFT_CONTROLLER_POSITION_Y]))
         # left_controller_positions_z.append(float(data[i][LEFT_CONTROLLER_POSITION_Z]))
 
+    dataDict['head_position_x'] = head_positions_x
+    dataDict['head_position_y'] = head_positions_y
+    dataDict['head_position_z'] = head_positions_z
     dataDict['right_hand_position_x'] = right_hand_positions_x
     dataDict['right_hand_position_y'] = right_hand_positions_y
     dataDict['right_hand_position_z'] = right_hand_positions_z
@@ -233,34 +260,68 @@ def calculateRate(dataDict):
 # i.e., compare participant 1's right_hand_position_x and
 # participant 2's right_hand_position_x
 # Returns a dictionary with the calculated data
-def calculateCorrelations(ppt1, ppt2):
+# interval is the timestamp interval of which we want to compute the correlation
+# offset is the time offset to the interval to measure if there was any delayed synchrony
+def calculateCorrelations(ppt1, ppt2, interval, offset):
     correlationList = defaultdict(list)
 
+    nInterval = len(ppt1['right_hand_position_x']) / interval + 1
+    # they are in timestamp order
     for k,_ in ppt1.iteritems():
         # only interested in the Pearson's correlation coefficient,
         # not the 2-tailed p-value, so return the first index
         # correlationList[k] = pearsonr(ppt1[k], ppt2[k])[0]
 
-        # Becausae the participants are facing each other,
-        # we have a mirroring effect, so we switch hands when comparing
+        # nInterval = len(ppt1[k]) / interval + 1
+        # print nInterval
+
+        start = 0
+        end = interval - 1
+        for i in range(nInterval):
+            if k != 'right_hand_position_x': continue
+            print k, i, start, end
+            if i == nInterval - 1:
+                # Last
+                print pearsonr(ppt1[k][start:], ppt2['left_hand_position_x'][start:])[0]
+
+            # add offset
+            print pearsonr(ppt1[k][start:end], ppt2['left_hand_position_x'][start+offset:end+offset])[0]
+            start = end + 1
+            end = start + interval - 1
+
+
+        # find correlations for all combinations
+        # of right hand, left hand, and head
         if k == 'right_hand_position_x':
-            correlationList[k] = pearsonr(ppt1[k], ppt2['left_hand_position_x'])[0]
+            correlationList[k + '_to_left_hand_position_x'] = pearsonr(ppt1[k], ppt2['left_hand_position_x'])[0]
+            correlationList[k + '_to_right_hand_position_x'] = pearsonr(ppt1[k], ppt2['right_hand_position_x'])[0]
+            correlationList[k + '_to_head_position_x'] = pearsonr(ppt1[k], ppt2['head_position_x'])[0]
         if k == 'right_hand_position_y':
-            correlationList[k] = pearsonr(ppt1[k], ppt2['left_hand_position_y'])[0]
+            correlationList[k + '_to_left_hand_position_y'] = pearsonr(ppt1[k], ppt2['left_hand_position_y'])[0]
+            correlationList[k + '_to_right_hand_position_y'] = pearsonr(ppt1[k], ppt2['right_hand_position_y'])[0]
+            correlationList[k + '_to_head_position_y'] = pearsonr(ppt1[k], ppt2['head_position_y'])[0]
         if k == 'right_hand_position_z':
-            correlationList[k] = pearsonr(ppt1[k], ppt2['left_hand_position_z'])[0]
+            correlationList[k + '_to_left_hand_position_z'] = pearsonr(ppt1[k], ppt2['left_hand_position_z'])[0]
+            correlationList[k + '_to_right_hand_position_z'] = pearsonr(ppt1[k], ppt2['right_hand_position_z'])[0]
+            correlationList[k + '_to_head_position_z'] = pearsonr(ppt1[k], ppt2['head_position_z'])[0]
         if k == 'left_hand_position_x':
-            correlationList[k] = pearsonr(ppt1[k], ppt2['right_hand_position_x'])[0]
+            correlationList[k + '_to_left_hand_position_x'] = pearsonr(ppt1[k], ppt2['left_hand_position_x'])[0]
+            correlationList[k + '_to_right_hand_position_x'] = pearsonr(ppt1[k], ppt2['right_hand_position_x'])[0]
+            correlationList[k + '_to_head_position_x'] = pearsonr(ppt1[k], ppt2['head_position_x'])[0]
         if k == 'left_hand_position_y':
-            correlationList[k] = pearsonr(ppt1[k], ppt2['right_hand_position_y'])[0]
+            correlationList[k + '_to_left_hand_position_y'] = pearsonr(ppt1[k], ppt2['left_hand_position_y'])[0]
+            correlationList[k + '_to_right_hand_position_y'] = pearsonr(ppt1[k], ppt2['right_hand_position_y'])[0]
+            correlationList[k + '_to_head_position_y'] = pearsonr(ppt1[k], ppt2['head_position_y'])[0]
         if k == 'left_hand_position_z':
-            correlationList[k] = pearsonr(ppt1[k], ppt2['right_hand_position_z'])[0]
+            correlationList[k + '_to_left_hand_position_z'] = pearsonr(ppt1[k], ppt2['left_hand_position_z'])[0]
+            correlationList[k + '_to_right_hand_position_z'] = pearsonr(ppt1[k], ppt2['right_hand_position_z'])[0]
+            correlationList[k + '_to_head_position_z'] = pearsonr(ppt1[k], ppt2['head_position_z'])[0]
 
     return correlationList
 
 # Main function to run synchrony algorithm
 def synchronyAlgorithm():
-    # get arrays of data with matched timestamp
+    # get arrays of data with matched timestamp in order
     (ppt1, ppt2) = matchDataByTime()
     print(len(ppt1), len(ppt2))
 
@@ -291,9 +352,7 @@ def synchronyAlgorithm():
     ppt2RateDict = calculateRate(ppt2DataDict)
 
     # Correlations
-    # TODO
-    # do we put in the absolute position or rate of change of position?
-    correlationList = calculateCorrelations(ppt1RateDict, ppt2RateDict)
+    correlationList = calculateCorrelations(ppt1RateDict, ppt2RateDict, 100, 10)
     print '---------------------------'
     print '---Pearson\'s correlation coefficients'
     print '---In terms of PPT1: meaning PPT1\'s right hand <=> PPT2\'s left hand'
