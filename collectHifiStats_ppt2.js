@@ -65,7 +65,7 @@ Controller.keyPressEvent.connect(function(key) {
 
         var req = new XMLHttpRequest();
         req.open("POST", ENDPOINT_URL, false);
-        req.send(JSON.stringify(timestamp));
+        req.send(JSON.stringify(timestamp)); 
     }
 
 
