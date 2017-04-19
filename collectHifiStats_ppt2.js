@@ -1,5 +1,5 @@
 // collectHifiStats_ppt2.js
-// Last updated 2/14/17 by JeongWoo Ha
+// Last updated 2/23/17 by JeongWoo Ha
 // for HiFi Study
 
 var ENDPOINT_URL = "https://qcy5nql2a4.execute-api.us-west-2.amazonaws.com/prod"; // NEW URL!
@@ -65,8 +65,7 @@ Controller.keyPressEvent.connect(function(key) {
 
         var req = new XMLHttpRequest();
         req.open("POST", ENDPOINT_URL, false);
-        req.send(JSON.stringify(timestamp));
-        print("sent to DynamoDB")
+        req.send(JSON.stringify(timestamp)); 
     }
 
 

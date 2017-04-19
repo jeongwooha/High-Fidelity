@@ -206,6 +206,22 @@ Controller.keyPressEvent.connect(function(key) {
     // }
 });
 
+// change color to blue 
+var isBlue = false;
+Controller.keyPressEvent.connect(function(key) {
+    print("you pressed " + key.text);
+
+    if (key.text === 'q') {
+        if (!isBlue) {
+            Entities.editEntity(numtext1, {textColor: {red:0, green:0, blueL 255}});
+            isBlue = true;
+        } else {
+            // change back to green
+            Entities.editEntity(numtext1, {textColor: {red:0, green:255, blueL 0}});
+            isBlue = false;
+        }
+    }
+});
 
 // Create a new mapping object
 var mapping = Controller.newMapping("zero");
