@@ -1,5 +1,5 @@
 // master_script_ppt1.js
-// last updated 2/20/17 by JeongWoo Ha
+// last updated 4/19/17 by JeongWoo Ha
 // for HiFi Study
 
 
@@ -213,11 +213,11 @@ Controller.keyPressEvent.connect(function(key) {
 
     if (key.text === 'q') {
         if (!isBlue) {
-            Entities.editEntity(numtext2, {textColor: {red:0, green:0, blueL 255}});
+            Entities.editEntity(numtext2, {textColor: {red:0, green:0, blue: 255}});
             isBlue = true;
         } else {
             // change back to green
-            Entities.editEntity(numtext2, {textColor: {red:0, green:255, blueL 0}});
+            Entities.editEntity(numtext2, {textColor: {red:0, green:255, blue: 0}});
             isBlue = false;
         }
     }
