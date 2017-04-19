@@ -6,8 +6,8 @@ var ENDPOINT_URL = "https://qcy5nql2a4.execute-api.us-west-2.amazonaws.com/prod"
 
 
 /*---------------------------------*/
-var user_id = "987987"; // SONA ID
-var condition = "A"; // condition type
+var user_id = "normal2"; // SONA ID
+var condition = "C"; // condition type
 // A - whole body with free arm
 // B - whole body with fixed arm
 // C - just face and hands
@@ -18,7 +18,7 @@ var filepath = "C:/Users/Jeremy Bailenson/hifiTimeStats.txt"
 
 
 
-var COLLECT_EVERY = 100; // 100 milliseconds = 0.1 seconds
+var COLLECT_EVERY = 10; // 100 milliseconds = 0.1 seconds
 //var COLLECT_EVERY = 1000;
 var SEND_EVERY = 10; // 10 batches = 1 second
 
@@ -66,6 +66,7 @@ Controller.keyPressEvent.connect(function(key) {
         var req = new XMLHttpRequest();
         req.open("POST", ENDPOINT_URL, false);
         req.send(JSON.stringify(timestamp));
+        print("sent to DynamoDB")
     }
 
 
