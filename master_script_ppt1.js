@@ -213,7 +213,7 @@ Controller.keyPressEvent.connect(function(key) {
 
     if (key.text === 'q') {
         if (!isBlue) {
-            Entities.editEntity(numtext2, {textColor: {red:255, green:255, blue: 0}});
+            Entities.editEntity(numtext2, {textColor: {red:255, green:0, blue: 0}});
             isBlue = true;
         } else {
             // change back to green
