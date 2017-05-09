@@ -1,5 +1,5 @@
 // master_script_ppt2.js
-// last updated 4/19/17 by JeongWoo Ha
+// Last updated 5/9/2017
 // for HiFi Study
 
 

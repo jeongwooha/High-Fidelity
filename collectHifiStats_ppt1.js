@@ -1,5 +1,5 @@
 // collectHifiStats_ppt1.js
-// Last updated 2/23/17 by JeongWoo Ha
+// Last updated 5/9/2017
 // for HiFi Study
 
 var ENDPOINT_URL = "https://qcy5nql2a4.execute-api.us-west-2.amazonaws.com/prod"; // NEW URL!

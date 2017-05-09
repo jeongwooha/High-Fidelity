@@ -1,5 +1,5 @@
 // collectHifiStats_ppt2.js
-// Last updated 2/23/17 by JeongWoo Ha
+// Last updated 5/9/2017
 // for HiFi Study
 
 var ENDPOINT_URL = "https://qcy5nql2a4.execute-api.us-west-2.amazonaws.com/prod"; // NEW URL!
@@ -18,7 +18,7 @@ var filepath = "C:/Users/Jeremy Bailenson/hifiTimeStats.txt"
 
 
 
-var COLLECT_EVERY = 10; // 100 milliseconds = 0.1 seconds
+var COLLECT_EVERY = 100; // 100 milliseconds = 0.1 seconds
 //var COLLECT_EVERY = 1000;
 var SEND_EVERY = 10; // 10 batches = 1 second
 

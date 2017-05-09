@@ -9,11 +9,11 @@ from scipy.stats.stats import pearsonr
 # node dynamoDBtoCSV.js -t study_stats > [today's date]output.csv
 
 
-###
+### 359ab, synchrony12, normal12, random12
 # You must edit this part to get the correct data
-filename = '20170316output.csv'
-user_id_1 = '359a'
-user_id_2 = '359b'
+filename = '20170426output.csv'
+user_id_1 = '358a'
+user_id_2 = '358b'
 
 
 ### Constants
@@ -64,6 +64,7 @@ def getInteractionInterval():
             # if userid1 has timestamp on it
             if userid == user_id_1 + 'timestamp':
                 print(userid)
+                print time
                 interval.append(time)
 
         # you should only have two timestamp values
@@ -83,9 +84,16 @@ def getDataWithinInterval():
     # get the interaction interval
     (start_interaction, end_interaction) = getInteractionInterval()
     #(start_interaction, end_interaction) = (1487886092.1, 1487886904.2) for 354ab
+    
+    # for normal12
+    #tart_interaction = '1491852479.4'
+    #end_interaction = '1491852738.9'
+
 
     ppt1 = []
     ppt2 = []
+    unique = []
+    u = []
     with open(filename, 'rb') as csvfile:
         reader = csv.reader(csvfile)
 
@@ -97,6 +105,10 @@ def getDataWithinInterval():
                 continue # ignore the first row
             # add data that are only in between the interaction timestamp
             if float(time) >= float(start_interaction) and float(time) <= float(end_interaction):
+                #print float(time)
+                #if float(time) not in u:
+                u.append(float(time))
+                unique.append(float(time))
                 if row[USER_ID] == user_id_1:
                     #time_1.append(float(time))
                     ppt1.append(row) # add the batch
@@ -104,6 +116,12 @@ def getDataWithinInterval():
                     #time_2.append(float(time))
                     ppt2.append(row) # add the batch
 
+        #sorted(ppt1, key=lambda time: )
+
+        unique_list = list(set(unique))
+        print 'nunique', len(unique_list)
+        #print sorted(unique_list)
+        print 'nu', len(u)
         print 'number of data within the interval', len(ppt1), len(ppt2)
         return (ppt1, ppt2)
 
@@ -121,7 +139,8 @@ def matchDataByTime():
         for j in range(len(ppt2)):
             time2 = ppt2[j][TIME][:UP_TO_FIRST_DECIMAL]
             # if time matches put the batch into a new array
-            if time1 == time2:
+            if float(time1) == float(time2):
+                #print time1, time2
                 count += 1
                 ppt1_matched.append(ppt1[i])
                 ppt2_matched.append(ppt2[j])
@@ -262,6 +281,12 @@ def calculateRate(dataDict):
 # Returns a dictionary with the calculated data
 # interval is the timestamp interval of which we want to compute the correlation
 # offset is the time offset to the interval to measure if there was any delayed synchrony
+
+# ** important **
+# We must comapre ppt1's -z with ppt2's x
+# ppt1's x with ppt2's z
+# ppt1's y with ppyt2'y
+
 def calculateCorrelations(ppt1, ppt2, interval, offset):
     correlationList = defaultdict(list)
 
@@ -277,45 +302,71 @@ def calculateCorrelations(ppt1, ppt2, interval, offset):
 
         start = 0
         end = interval - 1
-        for i in range(nInterval):
-            if k != 'right_hand_position_x': continue
-            print k, i, start, end
-            if i == nInterval - 1:
+        for i in range(nInterval - 1):
+            #if k != 'right_hand_position_x': continue
+            print k, i, start, end, nInterval
+            if i == nInterval - 2:
+                print "last"
                 # Last
+
                 print pearsonr(ppt1[k][start:], ppt2['left_hand_position_x'][start:])[0]
+                print pearsonr(ppt1[k][start:], ppt2['right_hand_position_x'][start:])[0]
+            else:
+                # add offset
+                if k == 'right_hand_position_x':
+                    #ppt1's x to ppt2's z
+                    print pearsonr(ppt1[k][start:end], ppt2['left_hand_position_z'][start+offset:end+offset])[0]
+                    print pearsonr(ppt1[k][start:end], ppt2['right_hand_position_z'][start+offset:end+offset])[0]
+                if k == 'right_hand_position_y':
+                    print pearsonr(ppt1[k][start:end], ppt2['left_hand_position_y'][start+offset:end+offset])[0]
+                    print pearsonr(ppt1[k][start:end], ppt2['right_hand_position_y'][start+offset:end+offset])[0]
+                if k == 'right_hand_position_z':
+                    # ppt1's -z to ppt2's x
+                    print pearsonr([ -i for i in ppt1[k][start:end] ], [ -i for i in ppt2['left_hand_position_x'][start+offset:end+offset] ])[0]
+                    print pearsonr([ -i for i in ppt1[k][start:end] ], [ -i for i in ppt2['right_hand_position_x'][start+offset:end+offset] ])[0]
+                if k == 'left_hand_position_x':
+                    # ppt1's x to ppt2'z
+                    print pearsonr(ppt1[k][start:end], ppt2['left_hand_position_z'][start+offset:end+offset])[0]
+                    print pearsonr(ppt1[k][start:end], ppt2['right_hand_position_z'][start+offset:end+offset])[0]
+                if k == 'left_hand_position_y':
+                    print pearsonr(ppt1[k][start:end], ppt2['left_hand_position_y'][start+offset:end+offset])[0]
+                    print pearsonr(ppt1[k][start:end], ppt2['right_hand_position_y'][start+offset:end+offset])[0]
+                if k == 'left_hand_position_z':
+                    # ppt1's -z to ppt2's x
+                    print pearsonr([ -i for i in ppt1[k][start:end] ], ppt2['left_hand_position_x'][start+offset:end+offset])[0]
+                    print pearsonr([ -i for i in ppt1[k][start:end] ], ppt2['right_hand_position_x'][start+offset:end+offset])[0]
+                start = end + 1
+                end = start + interval - 1
 
-            # add offset
-            print pearsonr(ppt1[k][start:end], ppt2['left_hand_position_x'][start+offset:end+offset])[0]
-            start = end + 1
-            end = start + interval - 1
 
-
+        '''
         # find correlations for all combinations
         # of right hand, left hand, and head
         if k == 'right_hand_position_x':
-            correlationList[k + '_to_left_hand_position_x'] = pearsonr(ppt1[k], ppt2['left_hand_position_x'])[0]
+            #correlationList[k + '_to_left_hand_position_x'] = pearsonr(ppt1[k], ppt2['left_hand_position_x'])[0]
             correlationList[k + '_to_right_hand_position_x'] = pearsonr(ppt1[k], ppt2['right_hand_position_x'])[0]
             correlationList[k + '_to_head_position_x'] = pearsonr(ppt1[k], ppt2['head_position_x'])[0]
         if k == 'right_hand_position_y':
             correlationList[k + '_to_left_hand_position_y'] = pearsonr(ppt1[k], ppt2['left_hand_position_y'])[0]
             correlationList[k + '_to_right_hand_position_y'] = pearsonr(ppt1[k], ppt2['right_hand_position_y'])[0]
-            correlationList[k + '_to_head_position_y'] = pearsonr(ppt1[k], ppt2['head_position_y'])[0]
+            #correlationList[k + '_to_head_position_y'] = pearsonr(ppt1[k], ppt2['head_position_y'])[0]
         if k == 'right_hand_position_z':
             correlationList[k + '_to_left_hand_position_z'] = pearsonr(ppt1[k], ppt2['left_hand_position_z'])[0]
             correlationList[k + '_to_right_hand_position_z'] = pearsonr(ppt1[k], ppt2['right_hand_position_z'])[0]
-            correlationList[k + '_to_head_position_z'] = pearsonr(ppt1[k], ppt2['head_position_z'])[0]
+            #correlationList[k + '_to_head_position_z'] = pearsonr(ppt1[k], ppt2['head_position_z'])[0]
         if k == 'left_hand_position_x':
             correlationList[k + '_to_left_hand_position_x'] = pearsonr(ppt1[k], ppt2['left_hand_position_x'])[0]
             correlationList[k + '_to_right_hand_position_x'] = pearsonr(ppt1[k], ppt2['right_hand_position_x'])[0]
-            correlationList[k + '_to_head_position_x'] = pearsonr(ppt1[k], ppt2['head_position_x'])[0]
+            #correlationList[k + '_to_head_position_x'] = pearsonr(ppt1[k], ppt2['head_position_x'])[0]
         if k == 'left_hand_position_y':
             correlationList[k + '_to_left_hand_position_y'] = pearsonr(ppt1[k], ppt2['left_hand_position_y'])[0]
             correlationList[k + '_to_right_hand_position_y'] = pearsonr(ppt1[k], ppt2['right_hand_position_y'])[0]
-            correlationList[k + '_to_head_position_y'] = pearsonr(ppt1[k], ppt2['head_position_y'])[0]
+            #correlationList[k + '_to_head_position_y'] = pearsonr(ppt1[k], ppt2['head_position_y'])[0]
         if k == 'left_hand_position_z':
             correlationList[k + '_to_left_hand_position_z'] = pearsonr(ppt1[k], ppt2['left_hand_position_z'])[0]
             correlationList[k + '_to_right_hand_position_z'] = pearsonr(ppt1[k], ppt2['right_hand_position_z'])[0]
-            correlationList[k + '_to_head_position_z'] = pearsonr(ppt1[k], ppt2['head_position_z'])[0]
+            #correlationList[k + '_to_head_position_z'] = pearsonr(ppt1[k], ppt2['head_position_z'])[0]
+        '''
 
     return correlationList
 
@@ -352,7 +403,7 @@ def synchronyAlgorithm():
     ppt2RateDict = calculateRate(ppt2DataDict)
 
     # Correlations
-    correlationList = calculateCorrelations(ppt1RateDict, ppt2RateDict, 100, 10)
+    correlationList = calculateCorrelations(ppt1RateDict, ppt2RateDict, 100, 0)
     print '---------------------------'
     print '---Pearson\'s correlation coefficients'
     print '---In terms of PPT1: meaning PPT1\'s right hand <=> PPT2\'s left hand'
