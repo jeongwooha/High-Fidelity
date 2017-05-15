@@ -75,12 +75,17 @@ Script.setInterval(function() {
     if (run) {
         Stats.forceUpdateStats();
         batch.push(getStats());
-        //print("before: " + JSON.stringify(batch));
         if (batch.length >= SEND_EVERY) {
             var req = new XMLHttpRequest();
-            req.open("POST", ENDPOINT_URL, false); // post to DynamoDB
+
+            req.open("POST", ENDPOINT_URL, true); // post to DynamoDB, true for async
+            req.onreadystatechange = function() {
+                if (req.readystate == 4 && req.status == 200) {
+                    print(req.responseText);
+                }
+            }
+            
             req.send(JSON.stringify(batch));
-            //print(JSON.stringify(batch));
             batch = []; // refresh the batch
             print("collecting data...");
         }
